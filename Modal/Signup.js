@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import {View,Text,StyleSheet,Platform,ScrollView,TextInput, Button, Modal,Image} from 'react-native';
-
+import Icon from 'react-native-vector-icons/FontAwesome'
 const Signup = (props) => {
     const [email,setEmail] = useState();
     const [password,setPassword] = useState();
@@ -47,7 +47,7 @@ const Signup = (props) => {
         <ScrollView>
           <Text style={styles.title}>SIGNUP</Text>
           <View style={{position:'absolute',top:5,right:5}}>
-                    <Button title="close" onPress={props.close} />
+                    <Button title="X" onPress={props.close} />
                 </View>
           {/* <View style={styles.switch}>
             <Button title={type} onPress={switchTypeHandler} />
@@ -70,6 +70,7 @@ const Signup = (props) => {
                 <Text style={styles.label} >Contact No.</Text>
                 <TextInput style={styles.input} value={number} onChangeText={text=>setNumber(text)} keyboardType='numeric' />
             </View>
+            <Text></Text>
             <View>
                 {/* <Button title="Send Verification Key" onPress={()=>emailHandler()} /> */}
                 <Button title="SUBMIT" color="green" onPress={()=>submitHandler()} />

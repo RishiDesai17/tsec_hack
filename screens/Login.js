@@ -1,8 +1,10 @@
 import { GoogleSignin, GoogleSigninButton, statusCodes } from 'react-native-google-signin';
 import React, { useState, useContext,useEffect } from 'react';
-import {View,Text,StyleSheet,Platform,ScrollView,TextInput, Button, Alert, ActivityIndicator, AsyncStorage, Modal} from 'react-native';
+import {View,Text,StyleSheet,TouchableOpacity,ScrollView,TextInput,Image,  Alert, ActivityIndicator, AsyncStorage, Modal, TouchableOpacityBase} from 'react-native';
 import Signup from '../Modal/Signup';
-
+import { Button, Container, Header, Content, Form, Item, Input, Label } from 'native-base';
+import { color } from 'react-native-reanimated';
+import Icon from 'react-native-vector-icons/FontAwesome'
 const Login = (props) => {
     const [email,setEmail] = useState();
     const [password,setPassword] = useState();
@@ -72,6 +74,19 @@ const Login = (props) => {
                 AsyncStorage.setItem("name",resData.docs[0].name)
                 AsyncStorage.setItem("email",resData.docs[0].email)
                 AsyncStorage.setItem("phno",resData.docs[0].phno.toString())
+                // AsyncStorage.setItem('recommender',JSON.stringify([
+                //     {category: 'Fitness',score: 0},
+                //     {category: 'Clothing',score: 0},
+                //     {category: 'Mobile Phones',score: 0},
+                //     {category: 'Sports',score: 0},
+                //     {category: 'Electronics',score: 0},
+                //     {category: 'Kitchen',score: 0}
+
+                // ]));
+                AsyncStorage.getItem('recommender').then((prop)=>{
+                    console.log(prop);
+                });
+                
                 props.navigation.navigate('Main');
             }
             else
@@ -115,19 +130,19 @@ const Login = (props) => {
     //     }
     //   };
     return(
-        <ScrollView>
+        <ScrollView >
           <Modal visible={welcome} animationType="fade">
               <View style={{backgroundColor:"black",flex:1,justifyContent:'center',alignItems:'center'}}>
-                <Text style={{color:"white",fontSize:45}}>MY APP</Text>
+                <Text style={{color:"white",fontSize:45, fontFamily: 'Montserrat-Regular'}}>RJMN ONLINE</Text>
                 <ActivityIndicator size="large" color="white" style={{marginTop:20}} />
               </View>
           </Modal>
-          {flag2?<ActivityIndicator size="large" />:<View>
-            <Text style={styles.title}>LOGIN</Text>
+          {flag2?<ActivityIndicator size="large" />:<View style={{backgroundColor:"#204366",height:60}}>
+            <Text style={styles.title}>WELCOME</Text>
             {/* <View style={styles.switch}>
               <Button title={type} onPress={switchTypeHandler} />
             </View> */}
-            <View style={styles.form}>
+            {/* <View style={styles.form}>
               <View style={styles.formControl}>
                   <Text style={styles.label} >Email</Text>
                   <TextInput style={styles.input} value={email} 
@@ -145,9 +160,31 @@ const Login = (props) => {
               </View>
               {flag?
               <ActivityIndicator size="large" />:null}
-            </View>
+            </View> */}
             </View>
           }
+        <Image style={{width:300,height:200,alignSelf:"center"}} source={{uri: "https://www.logopik.com/wp-content/uploads/edd/2018/07/Ecommerce-Logo-Vector.png"}}/>
+          <Container style={{backgroundColor:"#FFF",marginTop:30}}>
+        <Content style={{backgroundColor:"#fff"}}>
+          <Form style={{backgroundColor:"#fff"}}>
+
+            <Item floatingLabel>
+              <Label >Username</Label>
+              <Input onChangeText={text=>setEmail(text)} keyboardType="email-address"/>
+            </Item>
+            <Item floatingLabel>
+              <Label>Password</Label>
+              <Input value={password} secureTextEntry={true} onChangeText={text=>setPassword(text)}/>
+            </Item>
+
+            <TouchableOpacity onPress={()=>submitHandler()}style={styles.signInButton}><Text style={{color:'#ffffff'}}>Login</Text></TouchableOpacity>
+            <TouchableOpacity onPress={()=>setModal(true)} style={styles.signOutButton}><Text style={{color:'#ffffff'}}>Signup</Text></TouchableOpacity>
+            <Signup visible={modal} close={()=>setModal(false)} />
+          </Form>
+        </Content>
+      </Container>
+      {flag?
+              <ActivityIndicator size="large" />:null}
         </ScrollView>
     )
 }
@@ -171,13 +208,44 @@ const styles = StyleSheet.create({
     },
     title:{
         fontSize: 30,
-        textAlign: 'center'
+        textAlign: 'center',
+        color:"white",
+        marginTop:8,
+        fontSize:35,
+        fontFamily: 'Montserrat-Regular'
     },
     switch:{
         width: '20%',
         alignSelf: 'center',
         marginVertical: 20
-    }
+    },
+        signOutButton: {
+          marginTop:9,
+          marginRight: 10,
+          height:45,
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginBottom:20,
+          alignSelf: 'center',
+          width:150,
+          borderRadius:30,
+          backgroundColor: "#770BFF",
+        },
+        signInButton: {
+          marginTop:40,
+          marginRight: 10,
+          height:45,
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginBottom:20,
+          alignSelf: 'center',
+          width:150,
+          borderRadius:30,
+          backgroundColor: "green",
+        },
+      
 });
 
 export default Login;

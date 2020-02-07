@@ -4,6 +4,7 @@ import Navigator from './navigation/Navigator';
 import ContextProvider from './Context/context';
 
 const App = () => {
+  console.disableYellowBox = true;
   return (
     <ContextProvider>
       <Navigator />
