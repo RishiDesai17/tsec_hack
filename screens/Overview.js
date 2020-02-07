@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import {ScrollView,View,Text, AsyncStorage, Button , Image, StyleSheet, ActivityIndicator} from 'react-native';
+import {ScrollView,View,Text, AsyncStorage, Button , Image, StyleSheet, ActivityIndicator, Alert} from 'react-native';
 import {Context} from '../Context/context';
 
 let a=[];
@@ -55,6 +55,7 @@ const Overview = (props) => {
                         a=prod;
                         a.cart.push(props.navigation.getParam('it'))
                         patch(a.cart)
+                        Alert.alert("Added to cart!")
                     }} />
                     {/* <Button title="del" onPress={()=>{
                         a=prod;
